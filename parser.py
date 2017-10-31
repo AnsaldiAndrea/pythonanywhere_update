@@ -24,9 +24,9 @@ def regex_planet(values, title_dict):
         lower = re.sub('[^\w]','',title).lower()
         if lower in title_dict:
             release.insert(db,to_dict(title_dict[lower],volume,values))
-        else:                                                                   # manga is not in database and is not one-shot
+        else:
             release.unknown(db,values)
-    elif match and match.group(4):                                              # one-shot
+    elif match and match.group(4):
         title = match.group(4)
         lower = re.sub('[^\w]','',title).lower()
         if lower in title_dict:
@@ -44,7 +44,7 @@ def regex_star(values, title_dict):
             release.insert(db,to_dict(title_dict[lower],volume,values))
         else:
             release.unknown(db,values)
-    elif match and match.group(4):                                          # one-shot
+    elif match and match.group(4):
         title = match.group(5)
         lower = re.sub('[^\w]','',title).lower()
         if lower in title_dict:
@@ -63,7 +63,7 @@ def regex_jpop(values,title_dict,to_correct):
             to_correct.append(to_dict(title_dict[lower],volume,values))
         else:
             release.unknown(db,values)
-    elif match and match.group(4):                                          # one-shot
+    elif match and match.group(4):
         title = match.group(4)
         lower = re.sub('[^\w]','',title).lower()
         if lower in title_dict:
@@ -93,71 +93,6 @@ def get_title_from_id(cursor,id):
     result = cursor.fetchone()
     return result[0] if result else ''
 
-'''
-def insert_release(cursor,manga_id,subtitle,volume,release_date,price,cover):
-    try:
-        if release_date:
-            ex = ('insert into releases (manga_id,subtitle,volume,release_date,price,cover) '
-            'values({},"{}",{},\'{}\',{},"{}") '
-            'on duplicate key update cover=values(cover), release_date=values(release_date)').format(manga_id,subtitle,volume,release_date,price,cover)
-            cursor.execute(ex)
-            db.commit()
-        else:
-            ex = ('insert into releases (manga_id,subtitle,volume,price,cover) '
-            'values({},"{}",{},{},"{}") '
-            'on duplicate key update cover=values(cover)').format(manga_id,subtitle,volume,price,cover)
-            print('here?')
-            cursor.execute(ex)
-            db.commit()
-        update_collection(manga_id,subtitle,volume,cover)
-    except Exception as e:
-        print(e)
-        db.rollback()
-
-def to_array(manga_id,volume,values):
-    release_date = datetime.strptime(values[2], '%d/%m/%Y') if values[2] else datetime.now()
-    release_date = release_date.strftime('%Y-%m-%d')
-    return (manga_id,
-            values[1],
-            volume,
-            release_date,
-            values[3] if values[3] else '0',
-            values[4])
-
-
-def insert_from(manga_id,volume,values):
-    subtitle = values[1]
-    release_date = datetime.strptime(values[2], '%d/%m/%Y') if values[2] else datetime.now()
-    release_date = release_date.strftime('%Y-%m-%d')
-    price = values[3] if values[3] else '0'
-    cover = values[4]
-    insert_release(db.cursor(),manga_id,subtitle,volume,release_date,price,cover)
-
-
-
-
-def update_collection(manga_id,subtitle,volume,cover):
-    c = db.cursor()
-    try:
-        c.execute('insert into collection (manga_id,subtitle,volume,cover) values({},"{}",{},"{}")'.format(manga_id,subtitle,volume,cover))
-        db.commit()
-    except Exception:
-        db.rollback()
-        c.execute('update collection set cover="{}" where manga_id={} and volume={}'.format(cover,manga_id,volume))
-        db.commit()
-
-def update_manga(manga_id,volume,cover,release_date):
-    t = datetime.strptime('%Y-%m-%d',release_date).isocalendar()[:2]
-    now = datetime.now().isocalendar()[:2]
-    if t<=now:
-        c = db.cursor()
-        c.execute('select volumes,released,status from manga where id={}'.format(manga_id))
-        x = c.fetchone()
-        volumes,released,status = x[0],x[1],x[2]
-        if volume>volumes:
-            c.execute('update manga set cover={} where id={}'.format(cover,manga_id))
-            # TO DO
-'''
 def to_dict(manga_id,volume,values):
     release_date = datetime.strptime(values['release_date'], '%d/%m/%Y') if values['release_date'] else datetime.now()
     release_date = release_date.strftime('%Y-%m-%d')
