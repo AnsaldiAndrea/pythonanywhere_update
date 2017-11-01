@@ -1,14 +1,9 @@
-from pastebin import PastebinAPI
+from mypackage.pastebin import PastebinAPI
 import encoder
-import csvstring
+import mypackage.csvstring as csvstring
 from lxml import etree
 
-
 def import_data():
-    '''
-    with open('pastebin_key.txt', 'r') as f:
-        paste_key = f.readline()
-    '''
     api_key = 'bdb21db2a07cb713b7e6a1713257564d'
     x = PastebinAPI()
     user_key = x.generate_user_key(api_key,'Raistrike','Nuvoletta2').decode('utf-8')
