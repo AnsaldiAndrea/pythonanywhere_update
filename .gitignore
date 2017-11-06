@@ -1,12 +1,8 @@
 # Personal Files
-client_secret.json
-test.py
-data.csv
 
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
 
 # C extensions
@@ -108,3 +104,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# pycharm
+.idea/
+
