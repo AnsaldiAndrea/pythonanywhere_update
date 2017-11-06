@@ -14,6 +14,3 @@ def import_data():
     decoded = encoder.decode(raw)
     print(decoded)
     return csvstring.csvstring_to_values(decoded)
-
-
-import_data()
