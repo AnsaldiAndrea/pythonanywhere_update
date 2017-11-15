@@ -1,6 +1,7 @@
 # Personal Files
 test.py
-
+client_secret.json
+data.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -15,9 +15,6 @@ def remove_duplicate(_list):
 
 
 data = remove_duplicate(get_pastebin())
-for x in data:
-    print(x)
 
-
-#with Parser() as p:
-#    p.parseall(data)
+with Parser() as p:
+    p.parseall(data)
